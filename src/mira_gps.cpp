@@ -102,6 +102,10 @@ void Journey::clear(){
 }
 
 void Journey::plot(const std::string & path){
+    plot(journey_, path);
+}
+
+void Journey::plot(const std::vector<Waypoint> & journey, const std::string & path) const {
     Gnuplot gp;
     // Set the output terminal and file
     gp << "set terminal pngcairo size 800,600 enhanced font 'Verdana,10'\n";
@@ -115,7 +119,7 @@ void Journey::plot(const std::string & path){
     // Converting journey to plotting data
     std::vector<std::pair<double, double>> jrn_data;
     
-    for (const auto& wp: journey_){
+    for (const auto& wp: journey){
         jrn_data.push_back({wp.latitude, wp.longitude});
     }
     
@@ -123,4 +127,23 @@ void Journey::plot(const std::string & path){
     gp.send1d(jrn_data);
 }
 
+
+
+void Journey::smooth(const std::string & path){
+
+    double a0 = -3;
+    double a1 = 12;
+    double a2 = 17;
+
+    std::vector<Waypoint> journey_smooted;
+
+    for (int idx = 2; idx < journey_.size() - 3; ++idx){
+        auto smoothed_lat = (1.0 / 35.0 ) * (a0 * journey_[idx - 2].latitude + a1 * journey_[idx - 1].latitude + a2 * journey_[idx].latitude + a1 * journey_[idx + 1].latitude + a0 * journey_[idx + 2].latitude);
+        auto smoothed_long = (1.0 / 35.0 ) * (a0 * journey_[idx - 2].longitude + a1 * journey_[idx - 1].longitude + a2 * journey_[idx].longitude + a1 * journey_[idx + 1].longitude + a0 * journey_[idx + 2].longitude);
+        
+        journey_smooted.push_back({smoothed_long, smoothed_lat});
+    }
+
+    plot(journey_smooted, path);
+}
 }
