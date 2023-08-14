@@ -65,10 +65,16 @@ namespace mira{
              *@param path where to to store the .png file
             */
             void plot(const std::string & path = "");  
+            /**
+             *@brief TODO
+             *@param TODO
+            */
+            void plot(const std::vector<Waypoint> & journey, const std::string & path = "") const;
 
-            void savizkyGolay(){
-                
-            }
+            /**
+             *@brief Smooth the original path
+            */
+            void smooth(const std::string & path = "");
 
 
         private:
