@@ -7,10 +7,6 @@ std::ostream& operator<<(std::ostream& os, const Waypoint& wp) {
     return os;
 }
 
-inline auto toRad(const double value){
-    return value * ( M_PI / 180.0);
-}
-
 void Journey::load(const std::filesystem::path & path){
     std::ifstream file(path);
 
@@ -40,7 +36,7 @@ std::vector<std::string> Journey::split(std::string str){
 
     size_t pos = 0;
 
-    while ((pos = str.find(",")) != std::string::npos) {
+    while ((pos = str.find(DELIMITER_)) != std::string::npos) {
         
         tokens.push_back(str.substr(0, pos));
         str.erase(0, pos + 1);
@@ -102,6 +98,10 @@ void Journey::clear(){
 }
 
 void Journey::plot(const std::string & path){
+    plot(journey_, path);
+}
+
+void Journey::plot(const std::vector<Waypoint> & journey, const std::string & path) const {
     Gnuplot gp;
     // Set the output terminal and file
     gp << "set terminal pngcairo size 800,600 enhanced font 'Verdana,10'\n";
@@ -115,7 +115,7 @@ void Journey::plot(const std::string & path){
     // Converting journey to plotting data
     std::vector<std::pair<double, double>> jrn_data;
     
-    for (const auto& wp: journey_){
+    for (const auto& wp: journey){
         jrn_data.push_back({wp.latitude, wp.longitude});
     }
     
@@ -123,4 +123,26 @@ void Journey::plot(const std::string & path){
     gp.send1d(jrn_data);
 }
 
+void Journey::plotSmooth(const std::string & path){
+
+    plot(smooth(journey_), path);
 }
+
+std::vector<Waypoint> Journey::smooth(const std::vector<Waypoint> & jrn){
+    auto a0 = -3;
+    auto a1 = 12;
+    auto a2 = 17;
+
+    std::vector<Waypoint> journey_smoothed;
+
+    for (int idx = 2; idx < jrn.size() - 3; ++idx){
+        auto smoothed_lat = (1.0 / 35.0 ) * (a0 * jrn[idx - 2].latitude + a1 * jrn[idx - 1].latitude + a2 * jrn[idx].latitude + a1 * jrn[idx + 1].latitude + a0 * jrn[idx + 2].latitude);
+        auto smoothed_long = (1.0 / 35.0 ) * (a0 * jrn[idx - 2].longitude + a1 * jrn[idx - 1].longitude + a2 * jrn[idx].longitude + a1 * jrn[idx + 1].longitude + a0 * jrn[idx + 2].longitude);
+        
+        journey_smoothed.push_back({smoothed_long, smoothed_lat});
+    }
+
+    return journey_smoothed;
+}
+}
+

@@ -10,7 +10,8 @@ set(TEST_SOURCES
 add_executable(tests ${TEST_SOURCES})
 
 # Link Google Test to the test executable
-target_link_libraries(tests gtest gtest_main)
+target_link_libraries(tests PRIVATE gtest gtest_main ${LIB_NAME}  )
+
 
 # Optionally, you can add this line to automatically discover and register tests
 gtest_discover_tests(tests)
