@@ -8,5 +8,11 @@ sudo apt-get install cmake g++ libboost1.74-dev libboost-filesystem-dev \
                      libboost-iostreams-dev libgtest-dev gnuplot -y
 ```
 
+## Dockerfile
+We provide a `Dockerfile` with the environment for compiling and testing the library.
+
 ## Graphics
-We use gnuplot for visualising the path. [here](http://stahlke.org/dan/gnuplot-iostream/) a tutorial on how to use it can be found.
+Plotting and visualisation in C++ is a finicky operation, therefore, we decided to use one of the most common library for visualisation: `gnuplot`. [Here](http://stahlke.org/dan/gnuplot-iostream/) is a tutorial on how to use it for further modifications.
+
+## Testing
+We use `gtest` for doing the testing of the library.
