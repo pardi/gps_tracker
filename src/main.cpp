@@ -8,8 +8,7 @@ int main(){
     mira::Journey jrn;
     jrn.load("../mira_route.csv");
     jrn.log();
-    jrn.plot("../artifacts/img.png");
-    jrn.smooth("../artifacts/img_smoothed.png");
+    jrn.plot();
     std::cout << "Distance in Km: " << jrn.length() << std::endl;
     return 0;
 }
