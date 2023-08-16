@@ -19,7 +19,7 @@ set(HEADERS
 )
 
 include_directories(include
-deps/gnuplot-iostream
+/app/deps/gnuplot-iostream
 ${Boost_INCLUDE_DIRS})
 
 add_executable(${PROJECT_NAME} ${SOURCES})
