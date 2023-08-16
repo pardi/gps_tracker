@@ -23,6 +23,13 @@ The folder where to download the library is set up to work in the docker image.
 
 If you want to run this locally, please change the folder to the one of your choosing and update the `CMakeFile.txt` accordingly.
 
+## Installation
+```
+mkdir build && cd build
+cmake ..
+make
+```
+
 ## Testing
 We use `gtest` for doing the testing of the library.
 
