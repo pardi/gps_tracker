@@ -8,18 +8,12 @@ sudo apt-get install cmake g++ libboost1.74-dev libboost-filesystem-dev \
                      libboost-iostreams-dev libgtest-dev gnuplot -y
 ```
 
-## Dockerfile
-We provide a `Dockerfile` with the environment for compiling and testing the library.
+## VSCode environment
+We provide a `Dockerfile` and a vscode environment for compiling and testing the library.
 
-```
-docker build . -t container:latest
-docker run -it --rm -v $(pwd):/app/gps_tracker container
-```
-when in the container:
-```
-cd gps_tracker
-```
-and then follow the Install section
+Open the project folder with vscode and build the docker image from within VScode.
+
+From an embeeded terminal follow the installation section.
 
 ## Graphics
 Plotting and visualisation in C++ is a finicky operation, therefore, we decided to use one of the most common library for visualisation: `gnuplot`. [Here](http://stahlke.org/dan/gnuplot-iostream/) is a tutorial on how to use it for further modifications.
