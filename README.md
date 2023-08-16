@@ -14,5 +14,19 @@ We provide a `Dockerfile` with the environment for compiling and testing the lib
 ## Graphics
 Plotting and visualisation in C++ is a finicky operation, therefore, we decided to use one of the most common library for visualisation: `gnuplot`. [Here](http://stahlke.org/dan/gnuplot-iostream/) is a tutorial on how to use it for further modifications.
 
+To download the library, you can run:
+```
+git clone https://github.com/dstahlke/gnuplot-iostream.git /app/deps/gnuplot-iostream
+```
+
+The folder where to download the library is set up to work in the docker image. 
+
+If you want to run this locally, please change the folder to the one of your choosing and update the `CMakeFile.txt` accordingly.
+
 ## Testing
 We use `gtest` for doing the testing of the library.
+
+```
+ctest
+```
+add `verbose` option for more details
