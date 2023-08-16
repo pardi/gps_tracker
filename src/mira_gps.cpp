@@ -3,7 +3,7 @@
 namespace mira{
 
 std::ostream& operator<<(std::ostream& os, const Waypoint& wp) {
-    os << std::setprecision(6) << "lat: " << wp.latitude << " long: " << wp.longitude << " speed: " << wp.speed;
+    os << std::setprecision(6) << "timestamp: " << wp.timestamp << " lat: " << wp.latitude << " long: " << wp.longitude << " speed: " << wp.speed;
     return os;
 }
 
@@ -24,8 +24,8 @@ void Journey::load(const std::filesystem::path & path){
             std::cout << "[WARNING] Line " << line_number << ": missing information, discarded" << std::endl;
         }
         else{
-
-            journey_.push_back(Waypoint{std::stod(tokens[0]), std::stod(tokens[1]), std::stod(tokens[2])});
+            
+            journey_.push_back(Waypoint{std::stod(tokens[0]), std::stod(tokens[1]), std::stod(tokens[2]), std::stod(tokens[3])});
         }
         ++line_number;
     }
@@ -139,7 +139,7 @@ std::vector<Waypoint> Journey::smooth(const std::vector<Waypoint> & jrn){
         auto smoothed_lat = (1.0 / 35.0 ) * (a0 * jrn[idx - 2].latitude + a1 * jrn[idx - 1].latitude + a2 * jrn[idx].latitude + a1 * jrn[idx + 1].latitude + a0 * jrn[idx + 2].latitude);
         auto smoothed_long = (1.0 / 35.0 ) * (a0 * jrn[idx - 2].longitude + a1 * jrn[idx - 1].longitude + a2 * jrn[idx].longitude + a1 * jrn[idx + 1].longitude + a0 * jrn[idx + 2].longitude);
         
-        journey_smoothed.push_back({smoothed_long, smoothed_lat});
+        journey_smoothed.push_back({jrn[idx].timestamp, smoothed_long, smoothed_lat, jrn[idx].speed});
     }
 
     return journey_smoothed;

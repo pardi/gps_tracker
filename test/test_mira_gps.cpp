@@ -30,22 +30,23 @@ class MiraGPSJourneyTest: public Journey{
 TEST(MiraGPSTest, TestSplitCorrect) {
     MiraGPSJourneyTest jrn;
 
-    auto tokens = jrn.splitTest("0, 1, 2,");
+    auto tokens = jrn.splitTest("0, 1, 2, 3,");
 
-    EXPECT_TRUE(tokens.size() == 3);
+    EXPECT_TRUE(tokens.size() == mira::DATA_SIZE);
 
     EXPECT_TRUE(std::stod(tokens[0]) == 0);
     EXPECT_TRUE(std::stod(tokens[1]) == 1);
     EXPECT_TRUE(std::stod(tokens[2]) == 2);
+    EXPECT_TRUE(std::stod(tokens[3]) == 3);
 
 }
 
 TEST(MiraGPSTest, TestSplitNotCorrect) {
     MiraGPSJourneyTest jrn;
 
-    auto tokens = jrn.splitTest("0, 1, 2");
+    auto tokens = jrn.splitTest("0, 1, 2, 3");
 
-    EXPECT_TRUE(tokens.size() != 3);
+    EXPECT_TRUE(tokens.size() != mira::DATA_SIZE);
 }
 
 TEST(MiraGPSTest, TestToRad) {
@@ -106,8 +107,8 @@ TEST(MiraGPSTest, TestHaversineDistance) {
     MiraGPSJourneyTest jrn;
     jrn.load("../../test/test_gps_route.csv");
 
-    Waypoint wp1 = {50.0359, 0.054253};
-    Waypoint wp2 = {58.3838, 0.030412};
+    Waypoint wp1 = {0.0, 50.0359, 0.054253, 0.0};
+    Waypoint wp2 = {0.0, 58.3838, 0.030412, 0.0};
 
     EXPECT_NEAR( jrn.haversineDistanceTest(wp1, wp2), 928.248, EQ_TOLERANCE);
 }

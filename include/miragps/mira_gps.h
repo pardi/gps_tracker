@@ -12,8 +12,8 @@
 namespace mira{
 
     // Size of the fields contained in every GPS message 
-    // <longitude, latitude, speed>
-    constexpr size_t DATA_SIZE = 3; 
+    // <timestamp, longitude, latitude, speed>
+    constexpr size_t DATA_SIZE = 4; 
 
     // Size of the earth in KM
     constexpr double EARTH_RADIUS_KM = 6371.0;
@@ -25,6 +25,7 @@ namespace mira{
     * This class provides the minimum set of information to store a waypoint
     */
     struct Waypoint {
+        double timestamp;
         double longitude;
         double latitude;
         double speed;
