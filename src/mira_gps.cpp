@@ -85,10 +85,10 @@ double Journey::haversineDistance(const Waypoint& wp1, const Waypoint& wp2) cons
     auto lambda1 = toRad(wp1.longitude);
     auto lambda2 = toRad(wp2.longitude);
 
-    auto a =    std::pow(std::sin((phi1 - phi2) / 2.0), 2) + 
-                std::cos(lambda1) * std::cos(lambda2) * std::pow(std::sin((lambda1 - lambda2) / 2.0), 2);
+    auto a =    std::pow(std::sin((phi2 - phi1) / 2.0), 2) + 
+                std::cos(phi1) * std::cos(phi2) * std::pow(std::sin((lambda2 - lambda1) / 2.0), 2);
 
-    auto c = 2 * std::atan2(std::sqrt(a), std::sqrt(1 - a));
+    auto c = 2.0 * std::atan2(std::sqrt(a), std::sqrt(1 - a));
 
     return EARTH_RADIUS_KM * c;
 }

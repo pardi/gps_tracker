@@ -12,7 +12,7 @@
 namespace mira{
 
     // Size of the fields contained in every GPS message 
-    // <long, latitude, speed>
+    // <longitude, latitude, speed>
     constexpr size_t DATA_SIZE = 3; 
 
     // Size of the earth in KM

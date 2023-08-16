@@ -99,19 +99,17 @@ TEST(MiraGPSTest, TestLength) {
     MiraGPSJourneyTest jrn;
     jrn.load("../../test/test_gps_route.csv");
     
-    EXPECT_NEAR(jrn.length(), 1.27106, EQ_TOLERANCE);
+    EXPECT_NEAR(jrn.length(), 1.56551, EQ_TOLERANCE);
 }
 
 TEST(MiraGPSTest, TestHaversineDistance) {
     MiraGPSJourneyTest jrn;
     jrn.load("../../test/test_gps_route.csv");
 
-    Waypoint wp1 = {50.0359, 0.054253};//jrn.getJourney()[0];
-    Waypoint wp2 = {58.3838, 0.030412};//jrn.getJourney()[1];
+    Waypoint wp1 = {50.0359, 0.054253};
+    Waypoint wp2 = {58.3838, 0.030412};
 
-    std::cout << jrn.haversineDistanceTest(wp1, wp2) << std::endl;
-
-    EXPECT_NEAR( jrn.haversineDistanceTest(wp1, wp2), 0.00017755732556173524, EQ_TOLERANCE);
+    EXPECT_NEAR( jrn.haversineDistanceTest(wp1, wp2), 928.248, EQ_TOLERANCE);
 }
 
 
